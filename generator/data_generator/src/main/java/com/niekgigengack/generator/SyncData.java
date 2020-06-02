@@ -1,4 +1,4 @@
-package generator;
+package com.niekgigengack.generator;
 
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;

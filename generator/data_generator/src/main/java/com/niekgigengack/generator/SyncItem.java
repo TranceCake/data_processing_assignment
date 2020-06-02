@@ -1,4 +1,4 @@
-package generator;
+package com.niekgigengack.generator;
 
 import java.util.ArrayList;
 import java.util.UUID;
