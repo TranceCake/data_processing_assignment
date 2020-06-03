@@ -24,7 +24,7 @@ public class Producer {
     public Producer() throws IOException, TimeoutException, URISyntaxException, NoSuchAlgorithmException, KeyManagementException {
         ConnectionFactory factory = new ConnectionFactory();
 
-        factory.setUri("amqp://otrmjmki:lReftAHSXWS9SSFUgioHlElGLzeecvt3@rattlesnake.rmq.cloudamqp.com/otrmjmki");
+        factory.setUri("amqp://otrmjmki:lReftAHSXWS9SSFUgioHlElGLzeecvt3@rattlesnake.rmq.cloudamqp.com/otrmjmki"); // not usable for production system, vulnerability!
         
         conn = factory.newConnection();
         channel = conn.createChannel();
