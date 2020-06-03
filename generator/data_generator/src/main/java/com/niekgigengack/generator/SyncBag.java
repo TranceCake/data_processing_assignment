@@ -16,6 +16,14 @@ public class SyncBag {
         this.syncItem = new SyncItem();
     }
 
+    public String getId() {
+        return this.id;
+    }
+
+    public String getSource() {
+        return this.source;
+    }
+
     public SyncItem getSyncItem() {
         return this.syncItem;
     }

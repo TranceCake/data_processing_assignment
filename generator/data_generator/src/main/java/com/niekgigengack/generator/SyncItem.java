@@ -48,4 +48,20 @@ public class SyncItem {
                 this.currentData.getDataString0(), this.currentData.getDataString1(), this.currentData.getDataString2(),
                 this.currentData.getDataString3(), this.currentData.getDataString4(), this.currentData.getDataString5());
     }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public char getGrade() {
+        return this.grade;
+    }
+
+    public SyncData getCurrentData() {
+        return this.currentData;
+    }
+
+    public ArrayList<SyncData> getHistoryData() {
+        return this.historyData;
+    }
 }

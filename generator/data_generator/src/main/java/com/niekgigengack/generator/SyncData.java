@@ -138,6 +138,17 @@ public class SyncData {
     }
 
     // Getters and Setters
+    public String getId() {
+        return this.id;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public String getCreated() {
+        return this.created;
+    }
 
     public String getDataString0() {
         return this.dataString0;
