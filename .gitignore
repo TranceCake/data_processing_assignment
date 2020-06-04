@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+.vscode/settings.json
+generator/data_generator/.project
+generator/data_generator/.settings/org.eclipse.core.resources.prefs
+generator/data_generator/.settings/org.eclipse.jdt.apt.core.prefs
+generator/data_generator/.settings/org.eclipse.jdt.core.prefs
+generator/data_generator/.classpath
+generator/data_generator/.factorypath
