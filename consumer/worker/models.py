@@ -28,4 +28,3 @@ class SyncItem(models.Model):
 class HistoryData(models.Model):
     syncItem = models.ForeignKey(SyncItem, on_delete=models.CASCADE)
     syncData = models.ForeignKey(SyncData, on_delete=models.CASCADE)
-
