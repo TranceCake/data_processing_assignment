@@ -21,6 +21,7 @@ public class SyncData {
 
     private static final int MISSING_PERCENTAGE = 8;
     private static final int CORRUPT_PERCENTAGE = 10;
+    private static ArrayList<String> usedPostalCodes = new ArrayList<>();
 
     {
         urls.add("test");
@@ -72,7 +73,7 @@ public class SyncData {
             if (isCorrupted()) {
                 this.dataString3 = "*";
             } else {
-                this.dataString3 = generatePostalCode();
+                this.dataString3 = generatePostalCode(0);
             }
         }
 
@@ -111,7 +112,7 @@ public class SyncData {
         return randomIntString;
     }
 
-    private String generatePostalCode() {
+    private String generatePostalCode(int count) {
         final ArrayList<Character> chars = new ArrayList<>();
         chars.add((char) (getRandomInt(9) + 48)); // get 0-9 from ascii table with offset
         chars.add((char) (getRandomInt(9) + 48));
@@ -120,7 +121,16 @@ public class SyncData {
         chars.add((char) (getRandomInt(27) + 65)); // get A-Z from scii table with offset
         chars.add((char) (getRandomInt(27) + 65));
 
-        return String.format("%c%c%c%c%c%c", chars.toArray(new Character[chars.size()]));
+        String code = String.format("%c%c%c%c%c%c", chars.toArray(new Character[chars.size()]));
+        if(!usedPostalCodes.contains(code)) {
+            usedPostalCodes.add(code);
+            return code;
+        } else {
+            if(count == 25) { // trigger exit if 25 recursive calls have been made consequently
+                return usedPostalCodes.get(0); //prevents infinite loop if all 7.290.000 possible postal code combinations have already been generated (breaks uniqueness)
+            }
+            return generatePostalCode(count + 1);
+        }
     }
 
     private String generateURL() {
@@ -133,7 +143,7 @@ public class SyncData {
         return dtf.format(now).replace(" ", "T") + "+00:00"; // cheating but it's a stub anyway ;)
     }
 
-    private int getRandomInt(final int range) {
+    public static int getRandomInt(final int range) {
         return (int) (Math.random() * range);
     }
 
