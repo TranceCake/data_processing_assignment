@@ -36,7 +36,7 @@ public class Producer {
 
     public void send(byte[] message) throws IOException {
         channel.basicPublish(EXCHANGE_NAME, ROUTING_KEY, 
-                new AMQP.BasicProperties.Builder().contentType("text/plain").deliveryMode(2).build(), message);
+                new AMQP.BasicProperties.Builder().contentType("application/json").deliveryMode(2).build(), message);
     }
 
     public void close() throws IOException, TimeoutException {
