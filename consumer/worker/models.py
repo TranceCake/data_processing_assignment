@@ -1,11 +1,6 @@
 from django.db import models
 
 
-class SyncBag(models.Model):
-    id = models.UUIDField(primary_key=True)
-    source = models.CharField(max_length=36)
-
-
 class SyncData(models.Model):
     id = models.UUIDField(primary_key=True)
     status = models.SmallIntegerField()
@@ -18,13 +13,32 @@ class SyncData(models.Model):
     dataString5 = models.CharField(max_length=200)
 
 
+class HistoryData(models.Model):
+    syncData = models.ForeignKey(SyncData, on_delete=models.CASCADE)
+
+    @classmethod
+    def create(cls, syncData):
+        return cls(syncData=SyncData(syncData))
+
+
 class SyncItem(models.Model):
     id = models.UUIDField(primary_key=True)
-    syncBag = models.ForeignKey(SyncBag, on_delete=models.CASCADE)
     grade = models.CharField(max_length=1)
     currentData = models.ForeignKey(SyncData, on_delete=models.CASCADE)
+    historyData = models.ForeignKey(HistoryData, on_delete=models.CASCADE)
+
+    @classmethod
+    def create(cls, id, grade, currentData, historyData):
+        return cls(id=id, grade=grade, currentData=SyncData(**currentData),
+                   historyData=HistoryData.create(historyData))
 
 
-class HistoryData(models.Model):
+class SyncBag(models.Model):
+    id = models.UUIDField(primary_key=True)
+    source = models.CharField(max_length=36)
     syncItem = models.ForeignKey(SyncItem, on_delete=models.CASCADE)
-    syncData = models.ForeignKey(SyncData, on_delete=models.CASCADE)
+
+    @classmethod
+    def create(cls, id, source, syncItem):
+        return cls(id=id, source=source, syncItem=SyncItem.create(**syncItem))
+
