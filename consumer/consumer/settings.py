@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dashboard',
-    'worker'
+    'worker',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +122,28 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CELERY_BROKER_URL = 'amqp://otrmjmki:lReftAHSXWS9SSFUgioHlElGLzeecvt3@rattlesnake.rmq.cloudamqp.com/otrmjmki'
+RABBIT_URL = 'amqp://otrmjmki:lReftAHSXWS9SSFUgioHlElGLzeecvt3@rattlesnake.rmq.cloudamqp.com/otrmjmki'
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'C:/Users/info/Desktop/Adivare Opdracht/data_processing_assignment/debug.log',
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
