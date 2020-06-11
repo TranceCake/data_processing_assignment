@@ -13,8 +13,8 @@ app = Celery('consumer')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
-with app.pool.acquire(block=True) as conn:
-    dedup_queue.declare()
+# with app.pool.acquire(block=True) as conn:
+#     dedup_queue.declare()
 
 
 class FilterStep(bootsteps.ConsumerStep):
@@ -26,12 +26,25 @@ class FilterStep(bootsteps.ConsumerStep):
                          accept=['json'])]
 
     def handle_message(self, body, message):
-        # result = app.send_task('worker.tasks.filter_task', kwargs={'message': body})
-        result = app.send_task('worker.tasks.filter_task', kwargs=body)
-        # result = filter_task(body)
+        result = app.send_task('worker.tasks.filter_task', kwargs={'message': body})
+        print(result)
+        message.ack()
+
+
+class DedupStep(bootsteps.ConsumerStep):
+
+    def get_consumers(self, channel):
+        return [Consumer(channel,
+                         queues=[dedup_queue],
+                         callbacks=[self.handle_message],
+                         accept=['json'])]
+
+    def handle_message(self, body, message):
+        result = app.send_task('worker.tasks.dedup_task', kwargs={'message': body})
         print(result)
         message.ack()
 
 
 app.steps['consumer'].add(FilterStep)
+app.steps['consumer'].add(DedupStep)
 

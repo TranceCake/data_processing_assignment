@@ -132,7 +132,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'C:/Users/info/Desktop/Adivare Opdracht/data_processing_assignment/debug.log',
+            'filename': '/home/osboxes/adivare/data_processing_assignment/debug.log',
         },
         'console': {
             'level': 'INFO',
@@ -141,8 +141,8 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['file', 'console'],
-            'level': 'DEBUG',
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
             'propagate': True,
         },
     },
