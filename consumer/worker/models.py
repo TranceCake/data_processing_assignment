@@ -1,5 +1,10 @@
 from django.db import models
 
+from celery.utils.log import get_task_logger
+
+logger = get_task_logger(__name__)
+
+
 
 class SyncData(models.Model):
     id = models.UUIDField(primary_key=True)
@@ -18,7 +23,7 @@ class HistoryData(models.Model):
 
     @classmethod
     def create(cls, syncData):
-        return cls(syncData=SyncData(syncData))
+        return cls(syncData=SyncData(*syncData))
 
 
 class SyncItem(models.Model):
@@ -29,6 +34,7 @@ class SyncItem(models.Model):
 
     @classmethod
     def create(cls, id, grade, currentData, historyData):
+        logger.warn('{}'.format(currentData))
         return cls(id=id, grade=grade, currentData=SyncData(**currentData),
                    historyData=HistoryData.create(historyData))
 
