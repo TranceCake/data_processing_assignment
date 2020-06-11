@@ -7,7 +7,7 @@ A few notes:
 * I kept the master clean, so it only has code I consider 'working'.
 The rest I merged into the development branch so it was all in one place.
 
-* I just (thursday 11th of june) discovered that the problems I encountered with celery (described below) were due to it running on Windows. I did read the notice that as of 4.0 it was no longer supporting Windows but I found an article that went into detail why and that it was quite easy to fix. Lesson leanred I guess because trying my code on linux instantly fixed some of hte issues I was having with the logger and threads becoming unresponsive.
+* I just (thursday 11th of june) discovered that the problems I encountered with celery (described below) were due to it running on Windows. I did read the notice that as of 4.0 it was no longer supporting Windows but I found an article that went into detail why and that it was quite easy to fix. Lesson leanred I guess because trying my code on linux instantly fixed some of the issues I was having with the logger and threads becoming unresponsive.
 
 * I started on hte consumer/worker feature branches. the goal was to create a filter step that sent to dedup and poison queues and a dedup step that would have identical separate workers. Searching online for what the best framework would be for this quickly got me to celery. I got a consumer working but failed ot get it to resend the messages back to the other queues. I tried to debug celery with a logger but that also didn't work showing no errors, just celerys debug logs but not my own logs. This all took the majority of my time. 
 
